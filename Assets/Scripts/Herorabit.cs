@@ -37,7 +37,7 @@ public class Herorabit : MonoBehaviour
 		if (Input.GetKey(KeyCode.DownArrow))
 		{
 			_bunny.MoveRotation(_bunny.rotation-10);
-		}
+		}	
 		
 	}
 }
