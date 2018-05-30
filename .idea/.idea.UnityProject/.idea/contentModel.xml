@@ -5,7 +5,8 @@
     <e p="C:\Users\Sasha\UnityProjects\UnityProject" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets\Scripts" t="Include">
-        <e p="Herorabit.cs" t="Include" />
+        <e p="HeroFollow.cs" t="Include" />
+        <e p="Herorabbit.cs" t="Include" />
       </e>
       <e p="Library" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
