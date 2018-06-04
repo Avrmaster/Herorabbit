@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 625520151}
   - component: {fileID: 625520152}
   - component: {fileID: 625520155}
+  - component: {fileID: 625520156}
   m_Layer: 0
   m_Name: Herorabbit
   m_TagString: Untagged
@@ -329,6 +330,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 2
   JumpSpeed: 6.66
+--- !u!95 &625520156
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 625520150}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cccd15d5e7f7d874e91762781f8333f5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &660657732
 GameObject:
   m_ObjectHideFlags: 0
