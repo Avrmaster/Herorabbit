@@ -1,62 +1,90 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HeroRabbit : MonoBehaviour
 {
-    public float Speed = 2;
+    public float Speed = 3;
+    public float MaxJumpTime = 2;
     public float JumpSpeed = 6.66f;
 
     private Animator _animator;
-    private Rigidbody2D _rabbit;
+    private Rigidbody2D _rabbitPhysics;
     private SpriteRenderer _sprite;
 
     private Vector3 _startingPosition;
 
+    private int _groundLayerId;
+    private bool _jumpActive;
+    private float _jumpTime;
 
-    // Use this for initialization
     private void Start()
     {
-        _animator = GetComponent<Animator>();
-        _rabbit = GetComponent<Rigidbody2D>();
-        _sprite = GetComponent<SpriteRenderer>();
-        SetStartPosition(_rabbit.transform.position);
+        _groundLayerId = 1 << LayerMask.NameToLayer("Ground");
+        _animator = GetComponentInChildren<Animator>();
+        _sprite = GetComponentInChildren<SpriteRenderer>();
+        _rabbitPhysics = GetComponent<Rigidbody2D>();
+        SetStartPosition(_rabbitPhysics.transform.position);
     }
 
     private void FixedUpdate()
     {
+        var isOnGround = IsOnGround();
         var value = Input.GetAxis("Horizontal");
+        var velocity = _rabbitPhysics.velocity;
         // ReSharper disable once CompareOfFloatsByEqualityOperator
         var running = value != 0;
 
         if (running)
+        {
             _sprite.flipX = value < 0;
-        _animator.SetBool("run", running);
+        }
 
-        var velocity = _rabbit.velocity;
         if ((Mathf.Abs(value) > 0))
         {
             velocity.x = value * Speed;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump") && isOnGround)
         {
-            velocity.y = JumpSpeed;
+            _jumpActive = true;
         }
 
-        _animator.SetBool("jump", Math.Abs(velocity.y) > 0.2);
+        if (_jumpActive)
+        {
+            if (Input.GetButton("Jump"))
+            {
+                _jumpTime += Time.deltaTime;
+                if (_jumpTime < MaxJumpTime)
+                    velocity.y = JumpSpeed * (1.0f - _jumpTime / MaxJumpTime);
+            }
+            else
+            {
+                _jumpActive = false;
+                _jumpTime = 0;
+            }
+        }
 
-        _rabbit.velocity = velocity;
-    }
-
-    public void SetStartPosition(Vector3 pos)
-    {
-        this._startingPosition = pos;
+        _animator.SetBool("run", running);
+        _animator.SetBool("jump", !isOnGround);
+        _rabbitPhysics.velocity = velocity;
+        _rabbitPhysics.angularVelocity = 0;
     }
 
     public void OnRabitDeath()
     {
-        _rabbit.transform.position = this._startingPosition;
-        _rabbit.angularVelocity = 0;
-        _rabbit.MoveRotation(0);
+        _rabbitPhysics.transform.position = _startingPosition;
+        _rabbitPhysics.MoveRotation(0);
+    }
+
+    private void SetStartPosition(Vector3 pos)
+    {
+        _startingPosition = pos;
+    }
+
+    private bool IsOnGround()
+    {
+        return Physics2D.Linecast(
+            transform.position,
+            transform.position + Vector3.down * 0.2f,
+            _groundLayerId);
     }
 }
