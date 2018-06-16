@@ -12,7 +12,7 @@ namespace World
 
 		public void OnRabitDeath(HeroRabbit heroRabbit)
 		{
-			heroRabbit.OnRabitDeath();
+			heroRabbit.Respawn();
 		}
 	
 	}

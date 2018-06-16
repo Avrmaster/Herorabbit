@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using World;
 
 namespace Herorabbit
 {
@@ -13,6 +14,7 @@ namespace Herorabbit
         private SpriteRenderer _sprite;
 
         private Vector3 _startingPosition;
+        private Transform _defaultParent;
 
         private int _groundLayerId;
         private bool _jumpActive;
@@ -24,12 +26,16 @@ namespace Herorabbit
             _animator = GetComponentInChildren<Animator>();
             _sprite = GetComponentInChildren<SpriteRenderer>();
             _rabbitPhysics = GetComponent<Rigidbody2D>();
-            SetStartPosition(_rabbitPhysics.transform.position);
+            _startingPosition = _rabbitPhysics.transform.position;
+            _defaultParent = transform.parent;
         }
 
         private void FixedUpdate()
         {
-            var isOnGround = IsOnGround();
+            var hit = GetHit();
+            var isOnGround = (bool) hit;
+            SetupRelativeTransform(hit);
+
             var value = Input.GetAxis("Horizontal");
             var velocity = _rabbitPhysics.velocity;
             // ReSharper disable once CompareOfFloatsByEqualityOperator
@@ -69,25 +75,47 @@ namespace Herorabbit
             _animator.SetBool("jump", !isOnGround);
             _rabbitPhysics.velocity = velocity;
             _rabbitPhysics.angularVelocity = 0;
+            _rabbitPhysics.rotation = 0;
         }
 
-        public void OnRabitDeath()
+        public void Respawn()
         {
             _rabbitPhysics.transform.position = _startingPosition;
             _rabbitPhysics.MoveRotation(0);
         }
 
-        private void SetStartPosition(Vector3 pos)
-        {
-            _startingPosition = pos;
-        }
-
-        private bool IsOnGround()
+        private RaycastHit2D GetHit()
         {
             return Physics2D.Linecast(
-                transform.position,
-                transform.position + Vector3.down * 0.2f,
+                transform.position + Vector3.up * 0.1f,
+                transform.position + Vector3.down * 0.1f,
                 _groundLayerId);
+        }
+
+        private static void SetNewParent(Transform obj, Transform newParent)
+        {
+            if (obj.transform.parent != newParent)
+            {
+                var pos = obj.transform.position;
+                obj.transform.parent = newParent;
+                obj.transform.position = pos;
+            }
+        }
+
+        private void SetupRelativeTransform(RaycastHit2D hit)
+        {
+            if (hit)
+            {
+                if (hit.transform != null
+                    && hit.transform.GetComponent<MovingPlatform>() != null)
+                {
+                    SetNewParent(transform, hit.transform);
+                }
+            }
+            else
+            {
+                SetNewParent(transform, _defaultParent);
+            }
         }
     }
 }
