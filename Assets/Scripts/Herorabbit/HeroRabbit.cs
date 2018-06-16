@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using World;
 
 namespace Herorabbit
@@ -15,6 +16,7 @@ namespace Herorabbit
 
         private Vector3 _startingPosition;
         private Transform _defaultParent;
+        private Vector3 _defaultScale;
 
         private int _groundLayerId;
         private bool _jumpActive;
@@ -28,6 +30,7 @@ namespace Herorabbit
             _rabbitPhysics = GetComponent<Rigidbody2D>();
             _startingPosition = _rabbitPhysics.transform.position;
             _defaultParent = transform.parent;
+            _defaultScale = transform.localScale;
         }
 
         private void FixedUpdate()
@@ -78,12 +81,6 @@ namespace Herorabbit
             _rabbitPhysics.rotation = 0;
         }
 
-        public void Respawn()
-        {
-            _rabbitPhysics.transform.position = _startingPosition;
-            _rabbitPhysics.MoveRotation(0);
-        }
-
         private RaycastHit2D GetHit()
         {
             return Physics2D.Linecast(
@@ -112,6 +109,46 @@ namespace Herorabbit
             {
                 SetNewParent(transform, _defaultParent);
             }
+        }
+
+        private bool _doesRespawnAfterDeath;
+
+        public void Kill(bool withRespawn)
+        {
+            _animator.SetTrigger("die");
+            _doesRespawnAfterDeath = withRespawn;
+        }
+
+        public void OnDied()
+        {
+            if (_doesRespawnAfterDeath)
+                Respawn();
+        }
+
+        private void Respawn()
+        {
+            _animator.SetTrigger("respawn");
+            _rabbitPhysics.transform.position = _startingPosition;
+            _rabbitPhysics.MoveRotation(0);
+        }
+
+
+        public void GrowUp()
+        {
+            if (transform.localScale == _defaultScale)
+            {
+                transform.localScale = _defaultScale * 1.5f;
+            }
+        }
+
+        public void GrowDown()
+        {
+            transform.localScale = _defaultScale;
+        }
+
+        public bool IsGrewUp()
+        {
+            return transform.localScale != _defaultScale;
         }
     }
 }

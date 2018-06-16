@@ -12,16 +12,28 @@ namespace World
             Current = this;
         }
 
-        private int _score;
+        private int _coinsCollected;
+        private int _fruitCollected;
+        private int _crystalsCollected;
 
         public void OnRabitDeath(HeroRabbit heroRabbit)
         {
-            heroRabbit.Respawn();
+            heroRabbit.Kill(true);
         }
 
         public void OnCollectCoin()
         {
-            _score += 1;
+            _coinsCollected += 1;
+        }
+
+        public void OnCollectFruit()
+        {
+            _fruitCollected += 1;
+        }
+
+        public void OnCollectCrystal()
+        {
+            _crystalsCollected += 1;
         }
     }
 }

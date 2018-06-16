@@ -5,8 +5,9 @@ namespace World.Collectables
 {
     public class Collectable : MonoBehaviour
     {
-        protected virtual void OnRabitHit(HeroRabbit rabit)
+        protected virtual void OnRabitHit(HeroRabbit rabbit)
         {
+            CollectedHide();
         }
 
         void OnTriggerEnter2D(Collider2D collider)

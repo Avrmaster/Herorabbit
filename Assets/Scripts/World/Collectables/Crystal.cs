@@ -2,12 +2,12 @@
 
 namespace World.Collectables
 {
-    public class Coin : Collectable
+    public class Crystal : Collectable
     {
         protected override void OnRabitHit(HeroRabbit rabbit)
         {
             base.OnRabitHit(rabbit);
-            LevelController.Current.OnCollectCoin();
+            LevelController.Current.OnCollectCrystal();
         }
     }
 }
