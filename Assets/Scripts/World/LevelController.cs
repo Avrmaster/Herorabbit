@@ -3,17 +3,25 @@ using UnityEngine;
 
 namespace World
 {
-	public class LevelController : MonoBehaviour {
+    public class LevelController : MonoBehaviour
+    {
+        public static LevelController Current;
 
-		public static LevelController Current;
-		void Awake() {
-			Current = this;
-		}
+        void Awake()
+        {
+            Current = this;
+        }
 
-		public void OnRabitDeath(HeroRabbit heroRabbit)
-		{
-			heroRabbit.Respawn();
-		}
-	
-	}
+        private int _score;
+
+        public void OnRabitDeath(HeroRabbit heroRabbit)
+        {
+            heroRabbit.Respawn();
+        }
+
+        public void OnCollectCoin()
+        {
+            _score += 1;
+        }
+    }
 }

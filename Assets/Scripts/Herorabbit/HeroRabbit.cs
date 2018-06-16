@@ -104,13 +104,9 @@ namespace Herorabbit
 
         private void SetupRelativeTransform(RaycastHit2D hit)
         {
-            if (hit)
+            if (hit && hit.transform != null && hit.transform.GetComponent<MovingPlatform>() != null)
             {
-                if (hit.transform != null
-                    && hit.transform.GetComponent<MovingPlatform>() != null)
-                {
-                    SetNewParent(transform, hit.transform);
-                }
+                SetNewParent(transform, hit.transform);
             }
             else
             {
