@@ -13,6 +13,7 @@ namespace Commons
         protected SpriteRenderer Sprite;
         protected Rigidbody2D Physics;
         protected Animator Animator;
+        protected bool IsDead;
 
         protected void Start()
         {
@@ -45,7 +46,6 @@ namespace Commons
         {
             var hitStart = transform.position + Vector3.up * 0.4f;
             var hitEnd = transform.position + Vector3.down * 0.1f;
-            Debug.DrawLine(hitStart, hitEnd, Color.magenta);
             return Physics2D.Linecast(hitStart, hitEnd, _groundLayerId);
         }
 
@@ -74,6 +74,7 @@ namespace Commons
         public void Kill(bool withRespawn)
         {
             Animator.SetTrigger("die");
+            IsDead = true;
             _isToRespawn = withRespawn;
         }
 
@@ -85,9 +86,15 @@ namespace Commons
 
         private void Respawn()
         {
+            IsDead = false;
             Animator.SetTrigger("respawn");
             Physics.transform.position = _startingPosition;
             Physics.MoveRotation(0);
         }
+        
+        public static bool HasArrived(Vector3 pos, Vector3 start, Vector3 target)
+        {
+            return Vector3.Distance(target, start) < Vector3.Distance(pos, start);
+        }   
     }
 }

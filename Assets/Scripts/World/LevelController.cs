@@ -16,9 +16,16 @@ namespace World
         private int _fruitCollected;
         private int _crystalsCollected;
 
-        public void OnRabitDeath(HeroRabbit heroRabbit)
+        public void OnRabbitDeath(HeroRabbit heroRabbit)
         {
-            heroRabbit.Kill(true);
+            if (heroRabbit.IsGrewUp())
+            {
+                heroRabbit.GrowDown();
+            }
+            else
+            {
+                heroRabbit.Kill(true);
+            }
         }
 
         public void OnCollectCoin()

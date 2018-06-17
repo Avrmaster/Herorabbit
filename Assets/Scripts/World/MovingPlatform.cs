@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using Commons;
 using UnityEngine;
 
 namespace World
@@ -26,7 +26,7 @@ namespace World
             var myPos = transform.position;
             var start = _movingForward ? _pointA : _pointB;
             var target = _movingForward ? _pointB : _pointA;
-            if (HasArrived(myPos, start, target))
+            if (MovingObject.HasArrived(myPos, start, target))
             {
                 _movingForward = !_movingForward;
                 _waitTimeout = WaitTime;
@@ -36,11 +36,6 @@ namespace World
                 _waitTimeout -= Time.deltaTime;
             else
                 transform.position = myPos + (target - start).normalized * Speed * Time.deltaTime;
-        }
-
-        bool HasArrived(Vector3 pos, Vector3 start, Vector3 target)
-        {
-            return Vector3.Distance(target, start) < Vector3.Distance(pos, start);
         }
     }
 }

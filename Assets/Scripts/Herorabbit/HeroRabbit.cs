@@ -11,7 +11,7 @@ namespace Herorabbit
         public float MaxJumpTime = 2;
         public float JumpSpeed = 6.66f;
 
-        public static HeroRabbit LastRabit = null;
+        public static HeroRabbit LastRabbit = null;
         private Vector3 _defaultScale;
 
         private bool _jumpActive;
@@ -19,7 +19,7 @@ namespace Herorabbit
 
         void Awake()
         {
-            LastRabit = this;
+            LastRabbit = this;
         }
 
         private new void Start()
@@ -31,8 +31,10 @@ namespace Herorabbit
         private new void FixedUpdate()
         {
             base.FixedUpdate();
+            if (IsDead)
+                return;
+            
             var isOnGround = IsOnGround();
-
             var value = Input.GetAxis("Horizontal");
             var velocity = Physics.velocity;
             // ReSharper disable once CompareOfFloatsByEqualityOperator

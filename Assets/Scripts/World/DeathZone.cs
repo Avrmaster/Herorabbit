@@ -8,7 +8,7 @@ namespace World
 		void OnTriggerEnter2D(Collider2D collided) {
 			var rabit = collided.GetComponent<HeroRabbit> ();
 			if(rabit != null) {
-				LevelController.Current.OnRabitDeath(rabit);
+				LevelController.Current.OnRabbitDeath(rabit);
 			}
 		}
 	
