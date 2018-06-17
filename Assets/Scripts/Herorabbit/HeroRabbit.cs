@@ -10,10 +10,12 @@ namespace Herorabbit
         public float Speed = 3;
         public float MaxJumpTime = 2;
         public float JumpSpeed = 6.66f;
+        public float GrewScaleFactor = 1.5f;
 
         public static HeroRabbit LastRabbit = null;
         private Vector3 _defaultScale;
 
+        private bool _isGrewUp;
         private bool _jumpActive;
         private float _jumpTime;
 
@@ -33,7 +35,7 @@ namespace Herorabbit
             base.FixedUpdate();
             if (IsDead)
                 return;
-            
+
             var isOnGround = IsOnGround();
             var value = Input.GetAxis("Horizontal");
             var velocity = Physics.velocity;
@@ -72,24 +74,24 @@ namespace Herorabbit
 
             Animator.SetBool("run", running);
             Physics.velocity = velocity;
+            transform.localScale = Vector3.Lerp(
+                transform.localScale,
+                _isGrewUp ? _defaultScale * GrewScaleFactor : _defaultScale, Time.deltaTime);
         }
 
         public void GrowUp()
         {
-            if (transform.localScale == _defaultScale)
-            {
-                transform.localScale = _defaultScale * 1.5f;
-            }
+            _isGrewUp = true;
         }
 
         public void GrowDown()
         {
-            transform.localScale = _defaultScale;
+            _isGrewUp = false;
         }
 
         public bool IsGrewUp()
         {
-            return transform.localScale != _defaultScale;
+            return _isGrewUp;
         }
     }
 }
