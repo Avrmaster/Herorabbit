@@ -1,52 +1,46 @@
 ﻿using System;
+using Commons;
 using UnityEngine;
 using World;
 
 namespace Herorabbit
 {
-    public class HeroRabbit : MonoBehaviour
+    public class HeroRabbit : MovingObject
     {
         public float Speed = 3;
         public float MaxJumpTime = 2;
         public float JumpSpeed = 6.66f;
 
-        private Animator _animator;
-        private Rigidbody2D _rabbitPhysics;
-        private SpriteRenderer _sprite;
-
-        private Vector3 _startingPosition;
-        private Transform _defaultParent;
+        public static HeroRabbit LastRabit = null;
         private Vector3 _defaultScale;
 
-        private int _groundLayerId;
         private bool _jumpActive;
         private float _jumpTime;
 
-        private void Start()
+        void Awake()
         {
-            _groundLayerId = 1 << LayerMask.NameToLayer("Ground");
-            _animator = GetComponentInChildren<Animator>();
-            _sprite = GetComponentInChildren<SpriteRenderer>();
-            _rabbitPhysics = GetComponent<Rigidbody2D>();
-            _startingPosition = _rabbitPhysics.transform.position;
-            _defaultParent = transform.parent;
+            LastRabit = this;
+        }
+
+        private new void Start()
+        {
+            base.Start();
             _defaultScale = transform.localScale;
         }
 
-        private void FixedUpdate()
+        private new void FixedUpdate()
         {
-            var hit = GetHit();
-            var isOnGround = (bool) hit;
-            SetupRelativeTransform(hit);
+            base.FixedUpdate();
+            var isOnGround = IsOnGround();
 
             var value = Input.GetAxis("Horizontal");
-            var velocity = _rabbitPhysics.velocity;
+            var velocity = Physics.velocity;
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             var running = value != 0;
 
             if (running)
             {
-                _sprite.flipX = value < 0;
+                Sprite.flipX = value < 0;
             }
 
             if ((Mathf.Abs(value) > 0))
@@ -74,64 +68,9 @@ namespace Herorabbit
                 }
             }
 
-            _animator.SetBool("run", running);
-            _animator.SetBool("jump", !isOnGround);
-            _rabbitPhysics.velocity = velocity;
-            _rabbitPhysics.angularVelocity = 0;
-            _rabbitPhysics.rotation = 0;
+            Animator.SetBool("run", running);
+            Physics.velocity = velocity;
         }
-
-        private RaycastHit2D GetHit()
-        {
-            return Physics2D.Linecast(
-                transform.position + Vector3.up * 0.1f,
-                transform.position + Vector3.down * 0.1f,
-                _groundLayerId);
-        }
-
-        private static void SetNewParent(Transform obj, Transform newParent)
-        {
-            if (obj.transform.parent != newParent)
-            {
-                var pos = obj.transform.position;
-                obj.transform.parent = newParent;
-                obj.transform.position = pos;
-            }
-        }
-
-        private void SetupRelativeTransform(RaycastHit2D hit)
-        {
-            if (hit && hit.transform != null && hit.transform.GetComponent<MovingPlatform>() != null)
-            {
-                SetNewParent(transform, hit.transform);
-            }
-            else
-            {
-                SetNewParent(transform, _defaultParent);
-            }
-        }
-
-        private bool _doesRespawnAfterDeath;
-
-        public void Kill(bool withRespawn)
-        {
-            _animator.SetTrigger("die");
-            _doesRespawnAfterDeath = withRespawn;
-        }
-
-        public void OnDied()
-        {
-            if (_doesRespawnAfterDeath)
-                Respawn();
-        }
-
-        private void Respawn()
-        {
-            _animator.SetTrigger("respawn");
-            _rabbitPhysics.transform.position = _startingPosition;
-            _rabbitPhysics.MoveRotation(0);
-        }
-
 
         public void GrowUp()
         {
