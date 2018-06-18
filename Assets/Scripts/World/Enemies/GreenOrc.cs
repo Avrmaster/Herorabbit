@@ -26,6 +26,13 @@ namespace World.Enemies
             var curVelocity = Physics.velocity;
             curVelocity.x = RunSpeed * (transform.position.x > rabbitX ? -1 : 1);
             Physics.velocity = curVelocity;
+            Animator.SetBool("walk", false);
+            Animator.SetBool("run", true);
+        }
+
+        protected override void StopAtack()
+        {
+            Animator.SetBool("run", false);
         }
     }
 }

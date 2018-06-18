@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization.Formatters;
+﻿using System;
 using Commons;
 using Herorabbit;
 using UnityEngine;
@@ -22,6 +22,7 @@ namespace World.Enemies
 
         private Mode _mode = Mode.GoToA;
         private float _waitTimeout = 0;
+        private bool _dying = false;
         protected Vector3 PointA;
         protected Vector3 PointB;
 
@@ -35,7 +36,7 @@ namespace World.Enemies
         private new void FixedUpdate()
         {
             base.FixedUpdate();
-            if (IsDead)
+            if (IsDead || _dying)
                 return;
 
             PointA.y = PointB.y = transform.position.y;
@@ -47,20 +48,17 @@ namespace World.Enemies
             else if (_mode == Mode.Attack)
                 _mode = Mode.GoToA;
 
-            var walking = false;
-            var running = false;
             if (_mode == Mode.Attack)
             {
-                running = true;
                 Atack();
             }
             else
             {
+                StopAtack();
                 if (_waitTimeout > 0)
                     _waitTimeout -= Time.deltaTime;
                 else
                 {
-                    walking = true;
                     var myPos = transform.position;
                     var start = _mode == Mode.GoToA ? PointB : PointA;
                     var target = _mode == Mode.GoToA ? PointA : PointB;
@@ -77,27 +75,48 @@ namespace World.Enemies
                 }
             }
 
-            if (running || walking)
+            var moving = Math.Abs(Physics.velocity.x) > 0.1f;
+
+            if (moving)
                 Sprite.flipX = Physics.velocity.x > 0;
 
-            Animator.SetBool("walk", walking);
-            Animator.SetBool("run", _mode == Mode.Attack);
+            Animator.SetBool("walk", moving);
         }
 
         void OnCollisionEnter2D(Collision2D col)
         {
             {
                 var rabbit = col.gameObject.GetComponent<HeroRabbit>();
-                if (rabbit != null)
+                if (rabbit != null && !_dying)
                 {
-                    Animator.SetBool("atack", true);
-                    LevelController.Current.OnRabbitDeath(rabbit);
+                    var angle = Math.Atan2(
+                        rabbit.transform.position.y - transform.position.y,
+                        rabbit.transform.position.x - transform.position.x
+                    );
+
+                    if (angle > Math.PI / 4 && angle < 3 * Math.PI / 4)
+                    {
+                        _dying = true;
+                        Animator.SetTrigger("die");
+                    }
+                    else
+                    {
+                        Animator.SetBool("atack", true);
+                        LevelController.Current.OnRabbitDeath(rabbit);
+                    }
                 }
             }
+        }
+
+        public new void OnDied()
+        {
+            Destroy(gameObject);
         }
 
         protected abstract bool HasToAttack();
 
         protected abstract void Atack();
+
+        protected abstract void StopAtack();
     }
 }
