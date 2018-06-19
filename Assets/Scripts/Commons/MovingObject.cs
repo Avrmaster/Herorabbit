@@ -13,7 +13,7 @@ namespace Commons
         protected SpriteRenderer Sprite;
         protected Rigidbody2D Physics;
         protected Animator Animator;
-        protected bool IsDead;
+        public bool IsDead;
 
         protected void Start()
         {
@@ -73,8 +73,9 @@ namespace Commons
 
         public void Kill(bool withRespawn)
         {
-            Animator.SetTrigger("die");
+            if (IsDead) return;
             IsDead = true;
+            Animator.SetTrigger("die");
             _isToRespawn = withRespawn;
         }
 

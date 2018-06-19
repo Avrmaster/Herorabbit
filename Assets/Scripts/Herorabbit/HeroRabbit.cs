@@ -93,5 +93,12 @@ namespace Herorabbit
         {
             return _isGrewUp;
         }
+
+        public void SmallJump()
+        {
+            var velocity = Physics.velocity;
+            velocity.y = 2*JumpSpeed/3;
+            Physics.velocity = velocity;
+        }
     }
 }

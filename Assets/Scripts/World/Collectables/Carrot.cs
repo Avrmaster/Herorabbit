@@ -24,6 +24,7 @@ namespace World.Collectables
         protected override void OnRabitHit(HeroRabbit rabbit)
         {
             LevelController.Current.OnRabbitDeath(rabbit);
+            Destroy(gameObject);
         }
 
         private void FixedUpdate()

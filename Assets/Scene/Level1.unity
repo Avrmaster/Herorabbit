@@ -710,6 +710,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 212073053715452630, guid: 06d1e8c30a71a3e4c822777071b5e71e,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50437495412184410, guid: 06d1e8c30a71a3e4c822777071b5e71e,
+        type: 2}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06d1e8c30a71a3e4c822777071b5e71e, type: 2}
   m_IsPrefabParent: 0
@@ -1297,28 +1307,6 @@ Prefab:
     - target: {fileID: 1803158425170938, guid: 7cee5dfe643e36a48ae03b34df8e3443, type: 2}
       propertyPath: m_Name
       value: DeathZone1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4486817324801968, guid: 7cee5dfe643e36a48ae03b34df8e3443, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4486817324801968, guid: 7cee5dfe643e36a48ae03b34df8e3443, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4486817324801968, guid: 7cee5dfe643e36a48ae03b34df8e3443, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 61224575461013744, guid: 7cee5dfe643e36a48ae03b34df8e3443,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 61224575461013744, guid: 7cee5dfe643e36a48ae03b34df8e3443,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -28
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7cee5dfe643e36a48ae03b34df8e3443, type: 2}
@@ -2161,6 +2149,11 @@ Prefab:
     - target: {fileID: 4221801990982038, guid: 38bbb577da26d6542981bbb1a95cac6b, type: 2}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522915947583784, guid: 38bbb577da26d6542981bbb1a95cac6b,
+        type: 2}
+      propertyPath: RechargeTime
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 38bbb577da26d6542981bbb1a95cac6b, type: 2}

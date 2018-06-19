@@ -98,6 +98,7 @@ namespace World.Enemies
                     {
                         _dying = true;
                         Animator.SetTrigger("die");
+                        rabbit.SmallJump();
                     }
                     else
                     {
