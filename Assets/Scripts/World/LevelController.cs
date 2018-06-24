@@ -4,6 +4,23 @@ using UnityEngine.UI;
 
 namespace World
 {
+    [System.Serializable]
+    class LevelStat
+    {
+        public int CoinsCollected;
+
+        internal static LevelStat Load()
+        {
+            return JsonUtility.FromJson<LevelStat>(PlayerPrefs.GetString("stats", null)) ?? new LevelStat();
+        }
+
+        internal void Save()
+        {
+            PlayerPrefs.SetString("stats", JsonUtility.ToJson(this));
+            PlayerPrefs.Save();
+        }
+    }
+
     public class LevelController : MonoBehaviour
     {
         public static LevelController Current;
@@ -19,16 +36,26 @@ namespace World
         public GameObject CrystalPrefab;
         public GameObject CrystalEmptyPrefab;
 
+        public AudioClip BackgroundMusiClip;
+        private AudioSource _musicSource;
+
         private int _lifesLeft;
-        private int _coinsCollected;
         private int _fruitCollected;
         private int _crystalsCollected;
+
+        private LevelStat _levelStat;
 
         void Awake()
         {
             Current = this;
             _lifesLeft = LifesCount;
+            _levelStat = LevelStat.Load();
             UpdateContainers();
+
+            _musicSource = gameObject.CreateAudioSource(BackgroundMusiClip);
+            _musicSource.volume = 0.4f;
+            _musicSource.loop = true;
+            _musicSource.Play();
         }
 
 
@@ -49,7 +76,7 @@ namespace World
 
         public void OnCollectCoin()
         {
-            _coinsCollected += 1;
+            _levelStat.CoinsCollected += 1;
             UpdateContainers();
         }
 
@@ -68,11 +95,12 @@ namespace World
         private void UpdateContainers()
         {
             if (CoinsText)
-                CoinsText.text = _coinsCollected.ToFixedLengthString(4);
+                CoinsText.text = _levelStat.CoinsCollected.ToFixedLengthString(4);
             if (FruitText)
                 FruitText.text = _fruitCollected.ToProportion(MaxFruitsCount);
             FillContainer(LifesHolder, LifePrefab, LifeEmptyPrefab, _lifesLeft, LifesCount);
             FillContainer(CrystalsHolder, CrystalPrefab, CrystalEmptyPrefab, _crystalsCollected);
+            _levelStat.Save();
         }
 
         private void FillContainer(Image holder, GameObject prefab, GameObject emptyPrefab,
@@ -98,7 +126,7 @@ namespace World
                 var width = image.rectTransform.rect.width;
                 var pos = holder.rectTransform.position;
 
-                pos.x += 1.2f*width*scl*(0.5f + i - ((float) maxCount / 2));
+                pos.x += 1.2f * width * scl * (0.5f + i - ((float) maxCount / 2));
                 image.rectTransform.position = pos;
             }
         }

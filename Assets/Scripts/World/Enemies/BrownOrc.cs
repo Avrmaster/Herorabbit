@@ -43,6 +43,7 @@ namespace World.Enemies
 
         private void LaunchCarrot(bool direction)
         {
+            MoveAnimator.SetBool("atack", true);
             var obj = Instantiate(PrefabCarrot);
             var position = transform.position;
             position.y += 0.5f;

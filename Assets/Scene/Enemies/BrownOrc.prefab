@@ -117,10 +117,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f827f3fcd2b84b99aabe47cd4b817d28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsDead: 0
   WalkSpeed: 1.3
   RunSpeed: 2
   WaitTime: 3
   PatrolDistance: 4
+  AtackMusicClip: {fileID: 8300000, guid: ece9b14a232f14f48ab9a5e844cb5daf, type: 3}
   PrefabCarrot: {fileID: 1297192797576574, guid: fe417e51e4476f54dad757fc74ee3c6b,
     type: 2}
   TriggerDistance: 5

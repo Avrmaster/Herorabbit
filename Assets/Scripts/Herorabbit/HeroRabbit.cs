@@ -8,22 +8,27 @@ namespace Herorabbit
 {
     public class HeroRabbit : MovingObject
     {
-        public bool Idle = false;
+        public bool Idle;
         public float Speed = 3;
         public float MaxJumpTime = 2;
         public float JumpSpeed = 6.66f;
         public float GrewScaleFactor = 1.5f;
 
-        public static HeroRabbit LastRabbit = null;
+        public AudioClip OnJumpedAudioClip;
+        private AudioSource _onJumpedAudioSource;
+
+        public static HeroRabbit LastRabbit;
         private Vector3 _defaultScale;
 
         private bool _isGrewUp;
         private bool _jumpActive;
         private float _jumpTime;
+        private bool _lastOnGround;
 
         void Awake()
         {
             LastRabbit = this;
+            _onJumpedAudioSource = gameObject.CreateAudioSource(OnJumpedAudioClip);
         }
 
         private new void Start()
@@ -39,6 +44,15 @@ namespace Herorabbit
                 return;
 
             var isOnGround = IsOnGround();
+            if (isOnGround && !_lastOnGround)
+            {
+                Debug.Log("playing jump " + Time.time);
+                _onJumpedAudioSource.volume = 1;
+                _onJumpedAudioSource.PlayWithPrefs();
+            }
+
+            _lastOnGround = isOnGround;
+
             var value = Input.GetAxis("Horizontal");
             var velocity = Physics.velocity;
             // ReSharper disable once CompareOfFloatsByEqualityOperator
@@ -74,7 +88,7 @@ namespace Herorabbit
                 }
             }
 
-            Animator.SetBool("run", running);
+            MoveAnimator.SetBool("run", running);
             Physics.velocity = velocity;
             transform.localScale = Vector3.Lerp(
                 transform.localScale,

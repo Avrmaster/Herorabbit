@@ -13,6 +13,9 @@ namespace World.Enemies
         public float WaitTime = 3;
         public float PatrolDistance = 2;
 
+        public AudioClip AtackMusicClip;
+        private AudioSource _atackAudio;
+
         private enum Mode
         {
             GoToA,
@@ -25,6 +28,16 @@ namespace World.Enemies
         private bool _dying = false;
         protected Vector3 PointA;
         protected Vector3 PointB;
+
+        void Awake()
+        {
+            _atackAudio = gameObject.CreateAudioSource(AtackMusicClip);
+        }
+
+        void OnAtack()
+        {
+            _atackAudio.PlayWithPrefs();
+        }
 
         private new void Start()
         {
@@ -80,7 +93,7 @@ namespace World.Enemies
             if (moving)
                 Sprite.flipX = Physics.velocity.x > 0;
 
-            Animator.SetBool("walk", moving);
+            MoveAnimator.SetBool("walk", moving);
         }
 
         void OnCollisionEnter2D(Collision2D col)
@@ -97,12 +110,12 @@ namespace World.Enemies
                     if (angle > Math.PI / 4 && angle < 3 * Math.PI / 4)
                     {
                         _dying = true;
-                        Animator.SetTrigger("die");
+                        Kill(false);
                         rabbit.SmallJump();
                     }
                     else
                     {
-                        Animator.SetBool("atack", true);
+                        MoveAnimator.SetBool("atack", true);
                         LevelController.Current.OnRabbitDeath(rabbit);
                     }
                 }
@@ -111,6 +124,7 @@ namespace World.Enemies
 
         public new void OnDied()
         {
+            base.OnDied();
             Destroy(gameObject);
         }
 

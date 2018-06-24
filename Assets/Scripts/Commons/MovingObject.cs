@@ -6,41 +6,45 @@ namespace Commons
 {
     public abstract class MovingObject : MonoBehaviour
     {
+        public AudioClip OnDiedAudioClip;
+
         private Vector3 _startingPosition;
         private Transform _defaultParent;
         private int _groundLayerId;
-        private bool _lastIsOnGround;
+        private bool _lastOnGround;
+        private AudioSource _onDiedAudioSource;
 
         protected SpriteRenderer Sprite;
         protected Rigidbody2D Physics;
-        protected Animator Animator;
+        protected Animator MoveAnimator;
         public bool IsDead;
 
         protected void Start()
         {
             Sprite = GetComponentInChildren<SpriteRenderer>();
-            Animator = GetComponentInChildren<Animator>();
+            MoveAnimator = GetComponentInChildren<Animator>();
             Physics = GetComponent<Rigidbody2D>();
 
             _groundLayerId = 1 << LayerMask.NameToLayer("Ground");
             _startingPosition = Physics.transform.position;
             _defaultParent = transform.parent;
+            _onDiedAudioSource = gameObject.CreateAudioSource(OnDiedAudioClip);
         }
 
         protected void FixedUpdate()
         {
             var hit = GetHit();
-            _lastIsOnGround = hit;
+            _lastOnGround = hit;
             SetupRelativeTransform(hit);
 
-            Animator.SetBool("jump", !_lastIsOnGround);
+            MoveAnimator.SetBool("jump", !_lastOnGround);
             Physics.angularVelocity = 0;
             Physics.rotation = 0;
         }
 
         protected bool IsOnGround()
         {
-            return _lastIsOnGround;
+            return _lastOnGround;
         }
 
         private RaycastHit2D GetHit()
@@ -75,8 +79,9 @@ namespace Commons
         public void Kill(bool withRespawn)
         {
             if (IsDead) return;
+            _onDiedAudioSource.PlayWithPrefs();
             IsDead = true;
-            Animator.SetTrigger("die");
+            MoveAnimator.SetTrigger("die");
             IsToRespawn = withRespawn;
         }
 
@@ -89,7 +94,7 @@ namespace Commons
         private void Respawn()
         {
             IsDead = false;
-            Animator.SetTrigger("respawn");
+            MoveAnimator.SetTrigger("respawn");
             Physics.transform.position = _startingPosition;
             Physics.MoveRotation(0);
         }

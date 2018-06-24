@@ -120,6 +120,7 @@ MonoBehaviour:
     type: 2}
   CrystalEmptyPrefab: {fileID: 1544488092321398, guid: 141b48d1dc351c945b942492d44f25ac,
     type: 2}
+  BackgroundMusiClip: {fileID: 8300000, guid: 57a5b2120c2d04fa9bcb5b2e99ee9361, type: 3}
 --- !u!114 &114982770096015190
 MonoBehaviour:
   m_ObjectHideFlags: 1

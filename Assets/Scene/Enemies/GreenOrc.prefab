@@ -117,10 +117,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283a55ee63b94c8e89d4bea224365c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsDead: 0
   WalkSpeed: 1.3
   RunSpeed: 2
   WaitTime: 3
   PatrolDistance: 6
+  AtackMusicClip: {fileID: 8300000, guid: ece9b14a232f14f48ab9a5e844cb5daf, type: 3}
 --- !u!212 &212073053715452630
 SpriteRenderer:
   m_ObjectHideFlags: 1
