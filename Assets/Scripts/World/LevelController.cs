@@ -86,22 +86,26 @@ namespace World
                 Destroy(child.gameObject);
             }
 
-            for (int i = 0; i < maxCount; i++)
+            for (var i = 0; i < maxCount; i++)
             {
                 var newObj = Instantiate(i < count ? prefab : emptyPrefab);
                 newObj.transform.SetParent(holder.transform);
-                var width = ((RectTransform) newObj.transform).rect.width;
-                var pos = holder.transform.position;
-                pos.x += width * (0.5f + i - ((float) maxCount / 2));
-                newObj.transform.position = pos;
+
+                var scl = 1f / newObj.transform.localScale.x;
+                newObj.transform.localScale = new Vector3(1, 1, 1);
+
+                var image = newObj.GetComponent<Image>();
+                var width = image.rectTransform.rect.width;
+                var pos = holder.rectTransform.position;
+
+                pos.x += 1.2f*width*scl*(0.5f + i - ((float) maxCount / 2));
+                image.rectTransform.position = pos;
             }
         }
 
 
         public void OnPausePressed()
         {
-            
         }
-
     }
 }

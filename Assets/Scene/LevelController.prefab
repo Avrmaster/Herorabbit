@@ -107,6 +107,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 711ebe1f77bbe0745aecb9916017a06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LifesCount: 3
+  MaxFruitsCount: 11
+  CoinsText: {fileID: 0}
+  FruitText: {fileID: 0}
+  LifesHolder: {fileID: 0}
+  CrystalsHolder: {fileID: 0}
+  LifePrefab: {fileID: 1544488092321398, guid: 9a1d6248406488648b235a5e12b752d2, type: 2}
+  LifeEmptyPrefab: {fileID: 1544488092321398, guid: d273c64126e244c4b84bf8fea6441e93,
+    type: 2}
+  CrystalPrefab: {fileID: 1544488092321398, guid: 34b1a8d4ae828e840851f86a16aa2f91,
+    type: 2}
+  CrystalEmptyPrefab: {fileID: 1544488092321398, guid: 141b48d1dc351c945b942492d44f25ac,
+    type: 2}
 --- !u!114 &114982770096015190
 MonoBehaviour:
   m_ObjectHideFlags: 1

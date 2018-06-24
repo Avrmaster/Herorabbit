@@ -2120,6 +2120,11 @@ Prefab:
       objectReference: {fileID: 775884637}
     - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
         type: 2}
+      propertyPath: FruitText
+      value: 
+      objectReference: {fileID: 1991553151}
+    - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
+        type: 2}
       propertyPath: LifesHolder
       value: 
       objectReference: {fileID: 1987109009}
@@ -2130,49 +2135,9 @@ Prefab:
       objectReference: {fileID: 1097589100}
     - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
         type: 2}
-      propertyPath: FruitsHolder
-      value: 
-      objectReference: {fileID: 1332378318}
-    - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
-        type: 2}
-      propertyPath: FruitPrefab
-      value: 
-      objectReference: {fileID: 1544488092321398, guid: aa6e3ed265c064849b1127e62090503f,
-        type: 2}
-    - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
-        type: 2}
-      propertyPath: CrystalPrefab
-      value: 
-      objectReference: {fileID: 1544488092321398, guid: 34b1a8d4ae828e840851f86a16aa2f91,
-        type: 2}
-    - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
-        type: 2}
-      propertyPath: LifePrefab
-      value: 
-      objectReference: {fileID: 1544488092321398, guid: 9a1d6248406488648b235a5e12b752d2,
-        type: 2}
-    - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
-        type: 2}
       propertyPath: LifesCount
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
-        type: 2}
-      propertyPath: LifeEmptyPrefab
-      value: 
-      objectReference: {fileID: 1544488092321398, guid: d273c64126e244c4b84bf8fea6441e93,
-        type: 2}
-    - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
-        type: 2}
-      propertyPath: CrystalEmptyPrefab
-      value: 
-      objectReference: {fileID: 1544488092321398, guid: 141b48d1dc351c945b942492d44f25ac,
-        type: 2}
-    - target: {fileID: 114632416650679136, guid: 8d08ad46da43e6e49b32949ee41a307a,
-        type: 2}
-      propertyPath: FruitText
-      value: 
-      objectReference: {fileID: 1991553151}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d08ad46da43e6e49b32949ee41a307a, type: 2}
   m_IsPrefabParent: 0
@@ -2385,12 +2350,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
---- !u!114 &1332378318 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114063922800863738, guid: ec208a33937e7164f9689f8beb8d7510,
-    type: 2}
-  m_PrefabInternal: {fileID: 1823632394}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!4 &1337378716 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4466879883582086, guid: 87f9708d1fa1bcf46ab28ef608cd57de,
@@ -3100,6 +3059,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1130372023}
+    - target: {fileID: 223853098313206132, guid: ec208a33937e7164f9689f8beb8d7510,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2029539620}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec208a33937e7164f9689f8beb8d7510, type: 2}
   m_IsPrefabParent: 0
