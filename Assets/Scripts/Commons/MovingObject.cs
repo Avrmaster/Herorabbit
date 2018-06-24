@@ -70,19 +70,26 @@ namespace Commons
         }
 
         private bool _isToRespawn;
+        private bool _withQuit;
 
-        public void Kill(bool withRespawn)
+        public void Kill(bool withRespawn, bool withQuit = false)
         {
             if (IsDead) return;
             IsDead = true;
             Animator.SetTrigger("die");
             _isToRespawn = withRespawn;
+            _withQuit = withQuit;
         }
 
         public void OnDied()
         {
             if (_isToRespawn)
                 Respawn();
+            if (_withQuit)
+            {
+                //go to level selection
+                NavigationController.OnPlayPress();
+            }
         }
 
         private void Respawn()
@@ -92,10 +99,10 @@ namespace Commons
             Physics.transform.position = _startingPosition;
             Physics.MoveRotation(0);
         }
-        
+
         public static bool HasArrived(Vector3 pos, Vector3 start, Vector3 target)
         {
             return Vector3.Distance(target, start) < Vector3.Distance(pos, start);
-        }   
+        }
     }
 }

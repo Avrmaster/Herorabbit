@@ -7,6 +7,7 @@ namespace Herorabbit
 {
     public class HeroRabbit : MovingObject
     {
+        public bool Idle = false;
         public float Speed = 3;
         public float MaxJumpTime = 2;
         public float JumpSpeed = 6.66f;
@@ -33,7 +34,7 @@ namespace Herorabbit
         private new void FixedUpdate()
         {
             base.FixedUpdate();
-            if (IsDead)
+            if (IsDead || Idle)
                 return;
 
             var isOnGround = IsOnGround();
@@ -97,7 +98,7 @@ namespace Herorabbit
         public void SmallJump()
         {
             var velocity = Physics.velocity;
-            velocity.y = 2*JumpSpeed/3;
+            velocity.y = 2 * JumpSpeed / 3;
             Physics.velocity = velocity;
         }
     }
