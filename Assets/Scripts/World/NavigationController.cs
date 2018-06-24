@@ -5,12 +5,12 @@ namespace World
 {
     public class NavigationController : MonoBehaviour
     {
-        public static void OnPlayPress()
+        public void OnPlayPress()
         {
             SceneManager.LoadScene("LevelSelector");
         }
 
-        public static void OnSettingsPress()
+        public void OnSettingsPress()
         {
         }
     }

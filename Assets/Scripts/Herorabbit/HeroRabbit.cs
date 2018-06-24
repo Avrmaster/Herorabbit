@@ -1,6 +1,7 @@
 ﻿using System;
 using Commons;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using World;
 
 namespace Herorabbit
@@ -78,6 +79,13 @@ namespace Herorabbit
             transform.localScale = Vector3.Lerp(
                 transform.localScale,
                 _isGrewUp ? _defaultScale * GrewScaleFactor : _defaultScale, Time.deltaTime);
+        }
+
+        public new void OnDied()
+        {
+            base.OnDied();
+            if (!IsToRespawn)
+                SceneManager.LoadScene("LevelSelector");
         }
 
         public void GrowUp()

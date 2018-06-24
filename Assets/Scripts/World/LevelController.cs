@@ -41,7 +41,7 @@ namespace World
             else
             {
                 --_lifesLeft;
-                heroRabbit.Kill(LifesCount == -1 || _lifesLeft > 0, _lifesLeft == 0);
+                heroRabbit.Kill(LifesCount == -1 || _lifesLeft > 0);
             }
 
             UpdateContainers();

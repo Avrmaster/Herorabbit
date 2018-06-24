@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using World;
 
 namespace Commons
@@ -69,27 +70,20 @@ namespace Commons
             }
         }
 
-        private bool _isToRespawn;
-        private bool _withQuit;
+        protected bool IsToRespawn;
 
-        public void Kill(bool withRespawn, bool withQuit = false)
+        public void Kill(bool withRespawn)
         {
             if (IsDead) return;
             IsDead = true;
             Animator.SetTrigger("die");
-            _isToRespawn = withRespawn;
-            _withQuit = withQuit;
+            IsToRespawn = withRespawn;
         }
 
         public void OnDied()
         {
-            if (_isToRespawn)
+            if (IsToRespawn)
                 Respawn();
-            if (_withQuit)
-            {
-                //go to level selection
-                NavigationController.OnPlayPress();
-            }
         }
 
         private void Respawn()
