@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.Serialization.Formatters;
 using Herorabbit;
 using UnityEngine;
 
@@ -36,7 +37,8 @@ namespace World.Collectables
 
         public void Launch(bool direction)
         {
-            _speed = FlySpeed * (direction? 1 : -1);
+            _speed = FlySpeed * (direction ? 1 : -1);
+            GetComponent<SpriteRenderer>().flipX = !direction;
         }
     }
 }

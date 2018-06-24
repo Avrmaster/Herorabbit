@@ -48,6 +48,7 @@ namespace World.Enemies
             position.y += 0.5f;
             obj.transform.position = position;
             obj.GetComponent<Carrot>().Launch(direction);
+            Sprite.flipX = direction;
         }
     }
 }
