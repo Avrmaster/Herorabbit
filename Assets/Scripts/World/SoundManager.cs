@@ -23,7 +23,6 @@ namespace World
             _isSoundOn = PlayerPrefs.GetInt("sound", 1) == 1;
         }
 
-        public static SoundManager Instance = new SoundManager();
-        
+        public static readonly SoundManager Instance = new SoundManager();
     }
 }

@@ -45,12 +45,7 @@ namespace Herorabbit
 
             var isOnGround = IsOnGround();
             if (isOnGround && !_lastOnGround)
-            {
-                Debug.Log("playing jump " + Time.time);
-                _onJumpedAudioSource.volume = 1;
                 _onJumpedAudioSource.PlayWithPrefs();
-            }
-
             _lastOnGround = isOnGround;
 
             var value = Input.GetAxis("Horizontal");
